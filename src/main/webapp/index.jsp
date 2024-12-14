@@ -8,19 +8,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-     <style>
-         
-        body {
-            margin: 20px;
-            padding: 0;
-            background-image: url(fondo.jpg); /* Ruta de la imagen */
-            background-size: cover; /* Escala la imagen para que cubra toda la pantalla */
-            background-position: center; /* Centra la imagen */
-            background-repeat: no-repeat; /* Evita que la imagen se repita */
-        }
-    </style>   
+
     <img src="logo.png" width="250" height="150" />
-    
+
     <style>
         /* Contenedor para los formularios */
         .form-container {
@@ -33,21 +23,23 @@
         form {
             margin-left: 20px; /* Espacio entre los formularios */
             padding: 10px;
-            
-          
+
+
         }
     </style>
 </head>
 
 <body>
-    
+
     <%!
         // Variable global
         GrafoPesadoNoDirigido<String> grafo = new GrafoPesadoNoDirigido<>();
+        GrafoPesadoNoDirigido<String> grafoDistancia = new GrafoPesadoNoDirigido<>();
 
         // Método para cargar datos de mi proyecto al grafo
         public void cargarGrafoPredefinido() {
             grafo = new GrafoPesadoNoDirigido<>();
+            grafoDistancia = new GrafoPesadoNoDirigido<>();
             grafo.insertarVertice("Rusia");
             grafo.insertarVertice("Argentina");
             grafo.insertarVertice("Brasil");
@@ -92,7 +84,54 @@
             grafo.insertarArista("China", "Egipto", 600);
             grafo.insertarArista("Japon", "Corea del Sur", 200);
             grafo.insertarArista("Corea del Sur", "Egipto", 1200);
+       
+            grafoDistancia.insertarVertice("Rusia");
+            grafoDistancia.insertarVertice("Argentina");
+            grafoDistancia.insertarVertice("Brasil");
+            grafoDistancia.insertarVertice("Chile");
+            grafoDistancia.insertarVertice("Bolivia");
+            grafoDistancia.insertarVertice("Peru");
+            grafoDistancia.insertarVertice("Ecuador");
+            grafoDistancia.insertarVertice("Colombia");
+            grafoDistancia.insertarVertice("Venezuela");
+            grafoDistancia.insertarVertice("Mexico");
+            grafoDistancia.insertarVertice("Estados Unidos");
+            grafoDistancia.insertarVertice("China");
+            grafoDistancia.insertarVertice("Japon");
+            grafoDistancia.insertarVertice("Corea del Sur");
+            grafoDistancia.insertarVertice("Egipto");
+
+            grafoDistancia.insertarArista("Rusia", "Argentina", 17.5); // Moscú - Buenos Aires
+            grafoDistancia.insertarArista("Rusia", "Chile", 18.0); // Moscú - Santiago
+            grafoDistancia.insertarArista("Rusia", "Bolivia", 17.0); // Moscú - La Paz
+            grafoDistancia.insertarArista("Argentina", "Brasil", 3.0); // Buenos Aires - Brasilia
+            grafoDistancia.insertarArista("Argentina", "Peru", 4.5); // Buenos Aires - Lima
+            grafoDistancia.insertarArista("Argentina", "Bolivia", 3.5); // Buenos Aires - La Paz
+            grafoDistancia.insertarArista("Brasil", "Peru", 4.0); // Brasilia - Lima
+            grafoDistancia.insertarArista("Brasil", "Ecuador", 5.0); // Brasilia - Quito
+            grafoDistancia.insertarArista("Chile", "Bolivia", 3.0); // Santiago - La Paz
+            grafoDistancia.insertarArista("Chile", "Colombia", 5.5); // Santiago - Bogotá
+            grafoDistancia.insertarArista("Bolivia", "Peru", 2.0); // La Paz - Lima
+            grafoDistancia.insertarArista("Bolivia", "Venezuela", 5.0); // La Paz - Caracas
+            grafoDistancia.insertarArista("Bolivia", "Mexico", 8.0); // La Paz - Ciudad de México
+            grafoDistancia.insertarArista("Peru", "Ecuador", 2.5); // Lima - Quito
+            grafoDistancia.insertarArista("Peru", "Estados Unidos", 9.0); // Lima - Washington D.C.
+            grafoDistancia.insertarArista("Ecuador", "Estados Unidos", 7.5); // Quito - Washington D.C.
+            grafoDistancia.insertarArista("Ecuador", "China", 20.0); // Quito - Beijing
+            grafoDistancia.insertarArista("Colombia", "Venezuela", 1.5); // Bogotá - Caracas
+            grafoDistancia.insertarArista("Colombia", "Japon", 17.5); // Bogotá - Tokio
+            grafoDistancia.insertarArista("Venezuela", "Mexico", 5.0); // Caracas - Ciudad de México
+            grafoDistancia.insertarArista("Venezuela", "Japon", 18.0); // Caracas - Tokio
+            grafoDistancia.insertarArista("Mexico", "Estados Unidos", 4.0); // Ciudad de México - Washington D.C.
+            grafoDistancia.insertarArista("Mexico", "Corea del Sur", 14.5); // Ciudad de México - Seúl
+            grafoDistancia.insertarArista("Estados Unidos", "China", 13.5); // Washington D.C. - Beijing
+            grafoDistancia.insertarArista("Estados Unidos", "Egipto", 11.0); 
+            grafoDistancia.insertarArista("China", "Egipto", 9.5); 
+            grafoDistancia.insertarArista("Japon", "Corea del Sur", 2.0); 
+            grafoDistancia.insertarArista("Corea del Sur", "Egipto", 11.5); 
+
         }
+
     %>
 
     <h1>CONSIGUE EL MEJOR VUELO!</h1>
@@ -168,6 +207,19 @@
             </p>
             <button type="submit" name="accion" value="caminoMinimo">Buscar Vuelo Más Barato</button>
         </form>
+        <!-- Formulario para buscar distancia minima -->
+        <form method="post">
+            <h2>Buscar Distancia Minima</h2>
+            <p>
+                <label>Vértice Origen:</label>
+                <input type="text" name="verticeOrigen">
+            </p>
+            <p>
+                <label>Vértice Destino:</label>
+                <input type="text" name="verticeDestino">
+            </p>
+            <button type="submit" name="accion" value="distanciaMinima"> Buscar Vuelo Más Corto</button>
+        </form>
     </div>
 
 
@@ -183,6 +235,7 @@
             if (vertice != null && !vertice.isEmpty()) {
                 try {
                     grafo.insertarVertice(vertice);
+                    grafoDistancia.insertarVertice(vertice);
                     out.println("<p>Vértice agregado: " + vertice + "</p>");
                 } catch (IllegalArgumentException e) {
                     out.println("<p>Error: El vértice ya existe.</p>");
@@ -205,6 +258,7 @@
             try {
                 String verticeAEliminar = request.getParameter("verticeAEliminar");
                 grafo.eliminarVertice(verticeAEliminar);
+                grafoDistancia.eliminarVertice(verticeAEliminar);
                 out.println("<p>Vértice eliminado: " + verticeAEliminar + "</p>");
             } catch (IllegalArgumentException e) {
                 out.println("<p>Error: No se pudo eliminar el vértice </p>");
@@ -228,11 +282,23 @@
             } catch (IllegalArgumentException e) {
                 out.println("<p>No se puede eliminar la arista que seleccionaste</p");
             }
+        } else if ("distanciaMinima".equals(accion)) {
+            try {
+                String verticeOrigen = request.getParameter("verticeOrigen");
+                String verticeDestino = request.getParameter("verticeDestino");
+
+                out.println("<h3>Camino de menor distancia " + grafoDistancia.caminoCostoMinimo(verticeOrigen, verticeDestino) + "</h3>");
+                out.println("<h3>distancia total del viaje: " + grafoDistancia.costoMinimo(verticeOrigen, verticeDestino) + "Km</h3>");
+            } catch (IllegalArgumentException e) {
+                out.println("<p>No se puede ir de " + request.getParameter("verticeOrigen") + " a " + request.getParameter("verticeDestino") + "</p>");
+            }
         }
 
         // Mostrar grafo
-        out.println("<h2>      Grafo Actual:</h2>");
-        out.println("<i><pre>" + grafo + "<pre></i>");
+        out.println("<h2>      Grafo De Costos:</h2>");
+        out.println("<i><pre>" + grafo + "</pre></i>");
+        out.println("<h2>    Grafo De Distancias</h2>");
+        out.println("<i><pre>" + grafoDistancia + "</pre></i>");
     %>
 
 </body>
