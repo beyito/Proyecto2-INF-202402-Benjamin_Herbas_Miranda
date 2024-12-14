@@ -8,21 +8,21 @@ package Grafos_Pesados;
  *
  * @author cobu-
  */
-public class AdyacenciaConPeso implements Comparable<AdyacenciaConPeso> {
+public class AdyacenciaOrdenadoPorPeso implements Comparable<AdyacenciaOrdenadoPorPeso> {
 
     int verticeOrigen;
     int verticeDestino;
     double peso;
 
-    public AdyacenciaConPeso() {
+    public AdyacenciaOrdenadoPorPeso() {
     }
 
-    public AdyacenciaConPeso(int verticeOrigen, int verticeDestino) {
+    public AdyacenciaOrdenadoPorPeso(int verticeOrigen, int verticeDestino) {
         this.verticeOrigen = verticeOrigen;
         this.verticeDestino = verticeDestino;
     }
 
-    public AdyacenciaConPeso(int verticeOrigen, int verticeDestino, double peso) {
+    public AdyacenciaOrdenadoPorPeso(int verticeOrigen, int verticeDestino, double peso) {
         this.verticeOrigen = verticeOrigen;
         this.verticeDestino = verticeDestino;
         this.peso = peso;
@@ -53,7 +53,7 @@ public class AdyacenciaConPeso implements Comparable<AdyacenciaConPeso> {
     }
  
     @Override
-    public int compareTo(AdyacenciaConPeso o) {
+    public int compareTo(AdyacenciaOrdenadoPorPeso o) {
         if (this.peso > o.getPeso()) {
             return 1;
         } 
@@ -66,7 +66,7 @@ public class AdyacenciaConPeso implements Comparable<AdyacenciaConPeso> {
     
     @Override 
     public boolean equals(Object obj){
-      AdyacenciaConPeso o= (AdyacenciaConPeso) obj;
+      AdyacenciaOrdenadoPorPeso o= (AdyacenciaOrdenadoPorPeso) obj;
       return this.compareTo(o) == 0;
     }
 

@@ -53,11 +53,8 @@ public class DijkstraNoDirigido<G extends Comparable<G>> {
             int nroVerticeActual = nroVerticeMenorCostoSinMarcar();
             G verticeActual = grafo.listaDeVertices.get(nroVerticeActual);
             controlMarcados.marcarVertice(nroVerticeActual);
-            if (controlMarcados.estaMarcadoVertice(nroVerticeActual)) {
-                System.out.println("hola");
-            }
-
-            System.out.println(verticeActual);
+       
+           
             List<AdyacenteConPeso> listaAdyacencia = grafo.listaDeAdyacencias.get(nroVerticeActual);
 
             for (AdyacenteConPeso adyacente : listaAdyacencia) {
@@ -121,5 +118,6 @@ public class DijkstraNoDirigido<G extends Comparable<G>> {
         System.out.println(costoMenor);
         return posicionVerticeMenor;
     }
+  
 
 }

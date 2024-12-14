@@ -16,82 +16,62 @@ public class Kruskal<G extends Comparable<G>> {
 
     GrafoPesadoNoDirigido<G> grafo;
     GrafoPesadoNoDirigido<G> grafoOriginal;
-    List<AdyacenciaConPeso> listaOrdenados ;
-    
+    List<AdyacenciaOrdenadoPorPeso> listaOrdenados;
+
     public Kruskal(GrafoPesadoNoDirigido<G> grafoOriginal) {
+        
         this.grafoOriginal = grafoOriginal;
-        listaOrdenados= new ArrayList<>();
+        listaOrdenados = new ArrayList<>();
         grafo = new GrafoPesadoNoDirigido<>();
-        for(G vertice : grafoOriginal.getVertices()){
+        for (G vertice : grafoOriginal.getVertices()) {
             grafo.insertarVertice(vertice);
         }
         crearListaOrdenados();
         ejecutarKruskal();
     }
-    
-   /* 
-*/
-    public void crearListaOrdenados (){
- 
+
+    private void crearListaOrdenados() {
+
         for (G vertice : grafo.getVertices()) {
             int nroVerticeOrigen = grafo.nroVertice(vertice);
             for (G adyacente : grafoOriginal.getAdyacentesDelVertice(vertice)) {
-               
-                 int nroVerticeDestino = grafo.nroVertice(adyacente);
-                 double peso = grafoOriginal.peso(vertice,adyacente);
-                 
-                AdyacenciaConPeso ady = new AdyacenciaConPeso(nroVerticeDestino,nroVerticeOrigen);
-                if(!listaOrdenados.contains(ady)){
-                    
-                AdyacenciaConPeso adyConPeso = new AdyacenciaConPeso(nroVerticeOrigen,nroVerticeDestino,peso);
-   
-                listaOrdenados.add(adyConPeso);
-                Collections.sort(listaOrdenados);
-                }else{
-                System.out.println("hola");}
-            }
-                
-            }
 
-        
-    }
-    
-    public void copiarGrafo(GrafoPesadoNoDirigido<G> grafo) {
-        for (G vertice : grafoOriginal.getVertices()) {
-            grafo.insertarVertice(vertice);
-        }
-
-        for (G vertice : grafo.getVertices()) {
-            for (G adyacente : grafoOriginal.getAdyacentesDelVertice(vertice)) {
+                int nroVerticeDestino = grafo.nroVertice(adyacente);
                 double peso = grafoOriginal.peso(vertice, adyacente);
-                grafo.insertarArista(vertice, adyacente, peso);
+
+                AdyacenciaOrdenadoPorPeso ady = new AdyacenciaOrdenadoPorPeso(nroVerticeDestino, nroVerticeOrigen);
+                if (!listaOrdenados.contains(ady)) {
+
+                    AdyacenciaOrdenadoPorPeso adyConPeso = new AdyacenciaOrdenadoPorPeso(nroVerticeOrigen, nroVerticeDestino, peso);
+
+                    listaOrdenados.add(adyConPeso);
+                    Collections.sort(listaOrdenados);
+                }
+
             }
-
         }
 
     }
-    public void ejecutarKruskal(){
-        for(int i=0; i<listaOrdenados.size();i++){
-          AdyacenciaConPeso adyacenciaActual=listaOrdenados.get(i);
-          int nroVerticeOrigen = adyacenciaActual.getVerticeOrigen();
-          int nroVerticeDestino = adyacenciaActual.getVerticeDestino();
-          G verticeOrigen = grafo.listaDeVertices.get(nroVerticeOrigen);
-          G verticeDestino = grafo.listaDeVertices.get(nroVerticeDestino);
-          if(!grafo.existeAdyacencia(verticeOrigen,verticeDestino)){
-          double peso = grafoOriginal.peso(verticeOrigen, verticeDestino);
-            System.out.println(verticeOrigen+","+verticeDestino+","+peso);
-          
-          grafo.insertarArista(verticeOrigen, verticeDestino, peso);
-          System.out.println(grafo.hayCiclo());
-          if(grafo.hayCiclo()){
-              
-              grafo.eliminarArista(verticeOrigen, verticeDestino);
-          }
-          }
+
+    public void ejecutarKruskal() {
+        for (int i = 0; i < listaOrdenados.size(); i++) {
+            AdyacenciaOrdenadoPorPeso adyacenciaActual = listaOrdenados.get(i);
+            int nroVerticeOrigen = adyacenciaActual.getVerticeOrigen();
+            int nroVerticeDestino = adyacenciaActual.getVerticeDestino();
+            G verticeOrigen = grafo.listaDeVertices.get(nroVerticeOrigen);
+            G verticeDestino = grafo.listaDeVertices.get(nroVerticeDestino);
+            if (!grafo.existeAdyacencia(verticeOrigen, verticeDestino)) {
+                double peso = grafoOriginal.peso(verticeOrigen, verticeDestino);
+                System.out.println(verticeOrigen + "," + verticeDestino + "," + peso);
+                grafo.insertarArista(verticeOrigen, verticeDestino, peso);
+                if (grafo.hayCiclo()) {
+                    grafo.eliminarArista(verticeOrigen, verticeDestino);
+                }
+            }
         }
     }
-    
-    public GrafoPesadoNoDirigido<G> getGrafo(){
+
+    public GrafoPesadoNoDirigido<G> getGrafo() {
         return grafo;
     }
 

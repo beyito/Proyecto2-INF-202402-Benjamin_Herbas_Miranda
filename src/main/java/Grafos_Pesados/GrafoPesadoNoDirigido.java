@@ -31,6 +31,10 @@ public class GrafoPesadoNoDirigido<G extends Comparable<G>> {
         }
     }
 
+    public boolean esGrafoVacio() {
+        return listaDeVertices.isEmpty();
+    }
+
     public int cantidadDeVertices() {
         return listaDeVertices.size();
     }
@@ -39,40 +43,38 @@ public class GrafoPesadoNoDirigido<G extends Comparable<G>> {
         return listaDeVertices;
     }
 
-   public void insertarVertice(G vertice) {
-    // Verificar si el vértice ya existe
-    if (nroVertice(vertice) != NRO_DE_VERTICE_INVALIDO) {
-        throw new IllegalArgumentException("El vértice: " + vertice + " ya se encuentra en el grafo");
-    }
+    public void insertarVertice(G vertice) {
+        // Verificar si el vértice ya existe
+        if (nroVertice(vertice) != NRO_DE_VERTICE_INVALIDO) {
+            throw new IllegalArgumentException("El vértice: " + vertice + " ya se encuentra en el grafo");
+        }
 
-    // Agregar el vértice y ordenar la lista de vértices
-    listaDeVertices.add(vertice);
-    Collections.sort(listaDeVertices);
+        // Agregar el vértice y ordenar la lista de vértices
+        listaDeVertices.add(vertice);
+        Collections.sort(listaDeVertices);
 
-    // Insertar una nueva lista de adyacencias para el nuevo vértice
-    listaDeAdyacencias.add(new ArrayList<>());
+        // Insertar una nueva lista de adyacencias para el nuevo vértice
+        listaDeAdyacencias.add(new ArrayList<>());
 
-    // Obtener el índice del nuevo vértice después de ordenar
-    int nroNuevoVertice = nroVertice(vertice);
+        // Obtener el índice del nuevo vértice después de ordenar
+        int nroNuevoVertice = nroVertice(vertice);
 
-    // Si hay más de un vértice, reorganizar las listas de adyacencias
-    if (cantidadDeVertices() > 1) {
-        for(int i=0;i<cantidadDeVertices();i++){
-            for(AdyacenteConPeso adyConPeso : listaDeAdyacencias.get(i)){
-                if(adyConPeso.getNroVertice()>=nroNuevoVertice){
-                    adyConPeso.setNroVertice(adyConPeso.getNroVertice()+1);
+        // Si hay más de un vértice, reorganizar las listas de adyacencias
+        if (cantidadDeVertices() > 1) {
+            for (int i = 0; i < cantidadDeVertices(); i++) {
+                for (AdyacenteConPeso adyConPeso : listaDeAdyacencias.get(i)) {
+                    if (adyConPeso.getNroVertice() >= nroNuevoVertice) {
+                        adyConPeso.setNroVertice(adyConPeso.getNroVertice() + 1);
+                    }
                 }
             }
+            for (int i = cantidadDeVertices() - 1; i > nroNuevoVertice; i--) {
+                listaDeAdyacencias.set(i, listaDeAdyacencias.get(i - 1));
+            }
+            listaDeAdyacencias.set(nroNuevoVertice, new ArrayList<>());
         }
-        for(int i=cantidadDeVertices()-1;i>nroNuevoVertice;i--){
-            listaDeAdyacencias.set(i,listaDeAdyacencias.get(i-1));
-        }
-        listaDeAdyacencias.set(nroNuevoVertice,new ArrayList<>());
     }
-}
 
-
-      
     public void eliminarVertice(G verticeAEliminar) {
         validarVertice(verticeAEliminar);
         int nroVerticeAEliminar = nroVertice(verticeAEliminar);
@@ -98,7 +100,7 @@ public class GrafoPesadoNoDirigido<G extends Comparable<G>> {
         }
     }
 
-     public void insertarArista(G verticeOrigen, G verticeDestino, double peso) {// Grafo no pesado no lleva peso
+    public void insertarArista(G verticeOrigen, G verticeDestino, double peso) {// Grafo no pesado no lleva peso
         if (existeAdyacencia(verticeOrigen, verticeDestino)) {
             throw new IllegalArgumentException("Ya existe esa arista");
         }
@@ -118,7 +120,7 @@ public class GrafoPesadoNoDirigido<G extends Comparable<G>> {
         }
 
     }
-     
+
     public void eliminarArista(G verticeOrigen, G verticeDestino) {
         if (existeAdyacencia(verticeOrigen, verticeDestino)) {
             int nroVerticeOrigen = nroVertice(verticeOrigen);
@@ -150,8 +152,6 @@ public class GrafoPesadoNoDirigido<G extends Comparable<G>> {
         List<AdyacenteConPeso> listaAdyacencia = listaDeAdyacencias.get(nroVertice);
         return listaAdyacencia.size();
     }
-
-
 
     public void validarVertice(G vertice) {
         if (!listaDeVertices.contains(vertice)) {
@@ -221,30 +221,32 @@ public class GrafoPesadoNoDirigido<G extends Comparable<G>> {
             grafo += "[" + listaDeVertices.get(i) + "] => [";
             List<AdyacenteConPeso> adyacentes = listaDeAdyacencias.get(i);
             for (AdyacenteConPeso adyConPeso : adyacentes) {
-                grafo += "["+listaDeVertices.get(adyConPeso.getNroVertice()) + " | "+adyConPeso.getPeso()+"]->";
+                grafo += "[" + listaDeVertices.get(adyConPeso.getNroVertice()) + " | " + adyConPeso.getPeso() + "]->";
             }
-            
+
             grafo += "]\n";
         }
         return grafo;
     }
-/*Algoritmo FordFulkersen
 
-setpesoArista
-Collectionsort( , comparadorAdyacentePorPeso;
-
-mostrar grafo
-
-G =>[[B | 40.0]->[A | 20.0]->[C | 0.0]]
-A =>[[A | 20.0]->[G | 0.0]]*/
     public GrafoPesadoNoDirigido<G> kruskal() {
+        if (esGrafoVacio()) {
+            return null;
+        }
         Kruskal<G> kruskal = new Kruskal(this);
         return kruskal.getGrafo();
     }
 
+    public GrafoPesadoNoDirigido<G> expansionDeCostoMinimo() {
+        if(!esGrafoVacio()){
+        Kruskal<G> kruskal = new Kruskal(this);
+        return kruskal.getGrafo();
+        }
+        return this ;
+    }
+
     public GrafoPesadoNoDirigido<G> prim(G verticePartida) {
         validarVertice(verticePartida);
-       
         Prim<G> prim = new Prim(this, verticePartida);
         return prim.getGrafo();
     }
@@ -255,10 +257,11 @@ A =>[[A | 20.0]->[G | 0.0]]*/
         DijkstraNoDirigido<G> caminoCosto = new DijkstraNoDirigido<>(this, verticeOrigen, verticeDestino);
         return caminoCosto.caminoCostoMinimo();
     }
-    public double costoMinimo(G verticeOrigen, G verticeDestino){
+
+    public double costoMinimo(G verticeOrigen, G verticeDestino) {
         validarVertice(verticeOrigen);
         validarVertice(verticeDestino);
-             DijkstraNoDirigido<G> caminoCosto = new DijkstraNoDirigido<>(this, verticeOrigen, verticeDestino);
-return caminoCosto.costoMinimo();
+        DijkstraNoDirigido<G> caminoCosto = new DijkstraNoDirigido<>(this, verticeOrigen, verticeDestino);
+        return caminoCosto.costoMinimo();
     }
 }

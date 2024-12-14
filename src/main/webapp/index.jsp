@@ -101,34 +101,34 @@
             grafoDistancia.insertarVertice("Corea del Sur");
             grafoDistancia.insertarVertice("Egipto");
 
-            grafoDistancia.insertarArista("Rusia", "Argentina", 17.5); // Moscú - Buenos Aires
-            grafoDistancia.insertarArista("Rusia", "Chile", 18.0); // Moscú - Santiago
-            grafoDistancia.insertarArista("Rusia", "Bolivia", 17.0); // Moscú - La Paz
-            grafoDistancia.insertarArista("Argentina", "Brasil", 3.0); // Buenos Aires - Brasilia
-            grafoDistancia.insertarArista("Argentina", "Peru", 4.5); // Buenos Aires - Lima
-            grafoDistancia.insertarArista("Argentina", "Bolivia", 3.5); // Buenos Aires - La Paz
-            grafoDistancia.insertarArista("Brasil", "Peru", 4.0); // Brasilia - Lima
-            grafoDistancia.insertarArista("Brasil", "Ecuador", 5.0); // Brasilia - Quito
-            grafoDistancia.insertarArista("Chile", "Bolivia", 3.0); // Santiago - La Paz
-            grafoDistancia.insertarArista("Chile", "Colombia", 5.5); // Santiago - Bogotá
-            grafoDistancia.insertarArista("Bolivia", "Peru", 2.0); // La Paz - Lima
-            grafoDistancia.insertarArista("Bolivia", "Venezuela", 5.0); // La Paz - Caracas
-            grafoDistancia.insertarArista("Bolivia", "Mexico", 8.0); // La Paz - Ciudad de México
-            grafoDistancia.insertarArista("Peru", "Ecuador", 2.5); // Lima - Quito
-            grafoDistancia.insertarArista("Peru", "Estados Unidos", 9.0); // Lima - Washington D.C.
-            grafoDistancia.insertarArista("Ecuador", "Estados Unidos", 7.5); // Quito - Washington D.C.
-            grafoDistancia.insertarArista("Ecuador", "China", 20.0); // Quito - Beijing
-            grafoDistancia.insertarArista("Colombia", "Venezuela", 1.5); // Bogotá - Caracas
-            grafoDistancia.insertarArista("Colombia", "Japon", 17.5); // Bogotá - Tokio
-            grafoDistancia.insertarArista("Venezuela", "Mexico", 5.0); // Caracas - Ciudad de México
-            grafoDistancia.insertarArista("Venezuela", "Japon", 18.0); // Caracas - Tokio
-            grafoDistancia.insertarArista("Mexico", "Estados Unidos", 4.0); // Ciudad de México - Washington D.C.
-            grafoDistancia.insertarArista("Mexico", "Corea del Sur", 14.5); // Ciudad de México - Seúl
-            grafoDistancia.insertarArista("Estados Unidos", "China", 13.5); // Washington D.C. - Beijing
-            grafoDistancia.insertarArista("Estados Unidos", "Egipto", 11.0); 
-            grafoDistancia.insertarArista("China", "Egipto", 9.5); 
-            grafoDistancia.insertarArista("Japon", "Corea del Sur", 2.0); 
-            grafoDistancia.insertarArista("Corea del Sur", "Egipto", 11.5); 
+            grafoDistancia.insertarArista("Rusia", "Argentina", 17500); // Moscú - Buenos Aires
+            grafoDistancia.insertarArista("Rusia", "Chile", 18000); // Moscú - Santiago
+            grafoDistancia.insertarArista("Rusia", "Bolivia", 17000); // Moscú - La Paz
+            grafoDistancia.insertarArista("Argentina", "Brasil", 3000); // Buenos Aires - Brasilia
+            grafoDistancia.insertarArista("Argentina", "Peru", 4500); // Buenos Aires - Lima
+            grafoDistancia.insertarArista("Argentina", "Bolivia", 3500); // Buenos Aires - La Paz
+            grafoDistancia.insertarArista("Brasil", "Peru", 4000); // Brasilia - Lima
+            grafoDistancia.insertarArista("Brasil", "Ecuador", 5000); // Brasilia - Quito
+            grafoDistancia.insertarArista("Chile", "Bolivia", 3000); // Santiago - La Paz
+            grafoDistancia.insertarArista("Chile", "Colombia", 5500); // Santiago - Bogotá
+            grafoDistancia.insertarArista("Bolivia", "Peru", 2000); // La Paz - Lima
+            grafoDistancia.insertarArista("Bolivia", "Venezuela", 5000); // La Paz - Caracas
+            grafoDistancia.insertarArista("Bolivia", "Mexico", 8000); // La Paz - Ciudad de México
+            grafoDistancia.insertarArista("Peru", "Ecuador", 2500); // Lima - Quito
+            grafoDistancia.insertarArista("Peru", "Estados Unidos", 9000); // Lima - Washington D.C.
+            grafoDistancia.insertarArista("Ecuador", "Estados Unidos", 7500); // Quito - Washington D.C.
+            grafoDistancia.insertarArista("Ecuador", "China", 20000); // Quito - Beijing
+            grafoDistancia.insertarArista("Colombia", "Venezuela", 1500); // Bogotá - Caracas
+            grafoDistancia.insertarArista("Colombia", "Japon", 17500); // Bogotá - Tokio
+            grafoDistancia.insertarArista("Venezuela", "Mexico", 5000); // Caracas - Ciudad de México
+            grafoDistancia.insertarArista("Venezuela", "Japon", 18000); // Caracas - Tokio
+            grafoDistancia.insertarArista("Mexico", "Estados Unidos", 4000); // Ciudad de México - Washington D.C.
+            grafoDistancia.insertarArista("Mexico", "Corea del Sur", 14500); // Ciudad de México - Seúl
+            grafoDistancia.insertarArista("Estados Unidos", "China", 13500); // Washington D.C. - Beijing
+            grafoDistancia.insertarArista("Estados Unidos", "Egipto", 11000); 
+            grafoDistancia.insertarArista("China", "Egipto", 9500); 
+            grafoDistancia.insertarArista("Japon", "Corea del Sur", 2000); 
+            grafoDistancia.insertarArista("Corea del Sur", "Egipto", 11500); 
 
         }
 
@@ -223,7 +223,7 @@
     </div>
 
 
-    <!-- Procesar lógica en el servidor -->
+    <!-- Código Java -->
     <%
         String accion = request.getParameter("accion");
 
@@ -295,10 +295,17 @@
         }
 
         // Mostrar grafo
+        
+       out.println("<b><div style='white-space: pre; font-size: 1.7em; font-family: monospace;'>"
+        + "Número de Vértices: " + grafo.cantidadDeVertices() + "</div></b>");
+
+        
         out.println("<h2>      Grafo De Costos:</h2>");
-        out.println("<i><pre>" + grafo + "</pre></i>");
+        out.println("<div style='white-space: pre; font-size: 1.1em; font-family: monospace;line-height: 2.0em;'>" + grafo + "</div>");
         out.println("<h2>    Grafo De Distancias</h2>");
-        out.println("<i><pre>" + grafoDistancia + "</pre></i>");
+        out.println("<div style='white-space: pre; font-size: 1.1em; font-family: monospace;line-height: 2.0em;'>" + grafoDistancia + "</div>");
+        out.println("<h2>    Grafo De Expansión De Costos Mínima</h2>");
+        out.println("<div style='white-space: pre; font-size: 1.1em; font-family: monospace;line-height: 2.0em;'>" + grafo.expansionDeCostoMinimo() + "</div>");
     %>
 
 </body>

@@ -1,7 +1,6 @@
 Grafos_Pesados\Prim.class
 Grafos_Pesados\GrafoPesadoNoDirigidoOrdenadoPeso$Comparador.class
 Grafos_Pesados\GrafoPesadoNoDirigido.class
-Grafos_Pesados\AdyacenciaConPeso.class
 Grafos_Pesados\ControlMarcados.class
 Grafos_Pesados\DijkstraNoDirigido.class
 Grafos_Pesados\AdyacenteConPeso.class
@@ -10,6 +9,7 @@ Grafos_Pesados\GrafoPesadoDirigido.class
 Grafos_Pesados\Kruskal.class
 Grafos_Pesados\FordFulkerson.class
 Grafos_Pesados\Floyd.class
+Grafos_Pesados\AdyacenciaOrdenadoPorPeso.class
 Grafos_Pesados\Ciclo.class
 Grafos_Pesados\GrafoPesadoNoDirigidoOrdenadoPeso.class
 com\mycompany\proyectoed2\Main.class
