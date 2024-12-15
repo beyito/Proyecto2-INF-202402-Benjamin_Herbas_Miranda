@@ -8,24 +8,60 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-
-    <img src="logo.png" width="250" height="150" />
+    <style>
+         
+        body {
+            margin: 20px;
+            padding: 0;
+            background-color: #F2F2F2 ; /* Ruta de la imagen */
+            /* Escala la imagen para que cubra toda la pantalla */
+            background-position: center; /* Centra la imagen */
+            background-repeat: no-repeat; /* Evita que la imagen se repita */
+        }
+    </style>
+    <img src="logo.png" width="250" height="auto" />
 
     <style>
-        /* Contenedor para los formularios */
+        .container {
+            display: flex;
+            justify-content: flex-start;
+           
+            gap: 10px; /* Espacio entre los formularios */
+            margin: 20px;
+             
+        }
+
         .form-container {
+            
             display: flex;
             justify-content: flex-start; /* Mueve los formularios a la derecha */
-            margin-right: 20px; /* Añade un pequeño espacio a la derecha */
+            margin-right: 10px; /* Añade un pequeño espacio a la derecha */
         }
-
         /* Estilo para los formularios */
         form {
-            margin-left: 20px; /* Espacio entre los formularios */
+            border: 2px solid black ;
+            background-color: #E6F7FF ;
+            border-radius: 8px;
+            margin-left: 10px; /* Espacio entre los formularios */
             padding: 10px;
-
-
+            
+          
         }
+        h1{
+           color: #2C3E50;
+           font-size: 50px;
+           text-align: center;
+        }
+    #form-no-border {
+        form{
+            border:2 px solid #87CEEB;
+            border-radius: 0px;
+            margin-left: 5px; /* Espacio entre los formularios */
+            padding: 0px;
+     }
+        
+    }
+
     </style>
 </head>
 
@@ -133,13 +169,15 @@
         }
 
     %>
-
-    <h1>CONSIGUE EL MEJOR VUELO!</h1>
+   <h1>CONSIGUE EL MEJOR VUELO!</h1>
+        </style>
 
     <!-- Botón para cargar grafo predefinido -->
-    <form method="post">
+    <div class="form-container" id ="form-no-border" >
+    <form method="post"  >
         <button type="submit" name="accion" value="cargar"><h3> Cargar Grafo Predefinido </h3></button>
     </form>
+    </div>
 
     <!-- Contenedor para los formularios de insertar vértice y eliminar vértice -->
     <div class="form-container">
@@ -155,7 +193,7 @@
 
         <!-- Formulario para agregar arista -->
         <form method="post">
-            <h2>Insertar Arista:</h2>
+            <h2>Insertar Costo</h2>
             <p>
                 <label>Vértice Origen:</label>
                 <input type="text" name="verticeOrigen">
@@ -165,10 +203,29 @@
                 <input type="text" name="verticeDestino">
             </p>
             <p>
-                <label>Peso de la Arista:</label>
+                <label>Costo de la Arista:</label>
                 <input type="text" name="pesoArista">
             </p>
-            <button type="submit" name="accion" value="agregarArista">Agregar Arista</button>
+            <button type="submit" name="accion" value="agregarCosto">Agregar Costo</button>
+            <button type="submit" name="accion" value="actualizarCosto">Actualizar Costo</button>
+        </form>
+
+        <form method="post">
+            <h2>Insertar Distancia</h2>
+            <p>
+                <label>Vértice Origen:</label>
+                <input type="text" name="verticeOrigen">
+            </p>
+            <p>
+                <label>Vértice Destino:</label>
+                <input type="text" name="verticeDestino">
+            </p>
+            <p>
+                <label>Distancia de la Arista en Km:</label>
+                <input type="text" name="pesoArista">
+            </p>
+            <button type="submit" name="accion" value="agregarDistancia">Agregar Distancia</button>
+            <button type="submit" name="accion" value="actualizarDistancia">Actualizar Distancia</button>
         </form>
 
         <!-- Formulario para eliminar vértice -->
@@ -192,11 +249,12 @@
                 <input type="text" name="verticeDestino">
             </p>
 
-            <button type="submit" name="accion" value="eliminarArista">Eliminar Arista</button>
+            <button type="submit" name="accion" value="eliminarCosto">Eliminar Costo</button>
+            <button type="submit" name="accion" value="eliminarDistancia">Eliminar Distancia</button>
         </form>
         <!-- Formulario para hallar el costoMinimo -->
         <form method="post">
-            <h2>Escoger Vuelos Mas baratos:</h2>
+            <h2>Buscar Trayectoria Mas Barata </h2>
             <p>
                 <label>Vértice Origen:</label>
                 <input type="text" name="verticeOrigen">
@@ -209,7 +267,7 @@
         </form>
         <!-- Formulario para buscar distancia minima -->
         <form method="post">
-            <h2>Buscar Distancia Minima</h2>
+            <h2>Buscar Trayectoria Mas Corta </h2>
             <p>
                 <label>Vértice Origen:</label>
                 <input type="text" name="verticeOrigen">
@@ -222,7 +280,7 @@
         </form>
     </div>
 
-
+    <br>
     <!-- Código Java -->
     <%
         String accion = request.getParameter("accion");
@@ -241,7 +299,7 @@
                     out.println("<p>Error: El vértice ya existe.</p>");
                 }
             }
-        } else if ("agregarArista".equals(accion)) {
+        } else if ("agregarCosto".equals(accion)) {
             String verticeOrigen = request.getParameter("verticeOrigen");
             String verticeDestino = request.getParameter("verticeDestino");
             String pesoStr = request.getParameter("pesoArista");
@@ -273,7 +331,7 @@
             } catch (IllegalArgumentException e) {
                 out.println("<p>No se puede ir de " + request.getParameter("verticeOrigen") + " a " + request.getParameter("verticeDestino") + "</p>");
             }
-        } else if ("eliminarArista".equals(accion)) {
+        } else if ("eliminarCosto".equals(accion)) {
             try {
                 String verticeOrigen = request.getParameter("verticeOrigen");
                 String verticeDestino = request.getParameter("verticeDestino");
@@ -292,20 +350,88 @@
             } catch (IllegalArgumentException e) {
                 out.println("<p>No se puede ir de " + request.getParameter("verticeOrigen") + " a " + request.getParameter("verticeDestino") + "</p>");
             }
+        }else if("actualizarCosto".equals(accion)){
+       
+            String verticeOrigen = request.getParameter("verticeOrigen");
+            String verticeDestino = request.getParameter("verticeDestino");
+            String pesoStr = request.getParameter("pesoArista");
+            if (verticeOrigen != null && verticeDestino != null && pesoStr != null) {
+            double peso;
+                try {
+                     peso= Double.parseDouble(pesoStr);
+                    } catch (NumberFormatException e) {
+                    out.println("<p>Error: El costo debe ser un número válido.</p>");
+                    return;
+                }
+                 try {
+                    grafo.setPeso(verticeOrigen,verticeDestino,peso);
+                    out.println("<p>Arista actualizada -> " + verticeOrigen + " - " + verticeDestino + " (Nuevo Costo: " + peso + ")</p>");
+                } catch (IllegalArgumentException h) {
+                    out.println("<p>Error: El costo debe ser un número válido.</p>");
+                }
+            }     
+        }else if("actualizarDistancia".equals(accion)){
+       
+            String verticeOrigen = request.getParameter("verticeOrigen");
+            String verticeDestino = request.getParameter("verticeDestino");
+            String pesoStr = request.getParameter("pesoArista");
+            if (verticeOrigen != null && verticeDestino != null && pesoStr != null) {
+            double peso;
+                try {
+                     peso= Double.parseDouble(pesoStr);
+                    } catch (NumberFormatException e) {
+                    out.println("<p>Error: La distancia debe ser un número válido.</p>");
+                    return;
+                }
+                 try {
+                    grafoDistancia.setPeso(verticeOrigen,verticeDestino,peso);
+                    out.println("<p>Distancia actualizada -> " + verticeOrigen + " - " + verticeDestino + " (Nueva Distancia: " + peso + ")</p>");
+                } catch (IllegalArgumentException h) {
+                    out.println("<p> No hay arista entre : "+verticeOrigen+" y "+verticeDestino+"  </p>");
+                }
+            }     
+        }else if ("agregarDistancia".equals(accion)) {
+            String verticeOrigen = request.getParameter("verticeOrigen");
+            String verticeDestino = request.getParameter("verticeDestino");
+            String pesoStr = request.getParameter("pesoArista");
+            if (verticeOrigen != null && verticeDestino != null && pesoStr != null) {
+                try {
+                    double peso = Double.parseDouble(pesoStr);
+                    grafoDistancia.insertarArista(verticeOrigen, verticeDestino, peso);
+                    out.println("<p>Distancia agregada: " + verticeOrigen + " - " + verticeDestino + " (Distancia: " + peso + ")</p>");
+                } catch (NumberFormatException e) {
+                    out.println("<p>Error: La distancia debe ser un número válido.</p>");
+                }
+            }
+        }else if ("eliminarDistancia".equals(accion)) {
+            String verticeOrigen = request.getParameter("verticeOrigen");
+            String verticeDestino = request.getParameter("verticeDestino");
+            if (verticeOrigen != null && verticeDestino != null ) {
+                try {
+                    
+                    grafoDistancia.eliminarArista(verticeOrigen, verticeDestino);
+                    out.println("<p>Distancia eliminada: (" + verticeOrigen + " - " + verticeDestino + ")</p>");
+                } catch (IllegalArgumentException e) {
+                    out.println("<p> No hay arista entre : "+verticeOrigen+" y "+verticeDestino+"  </p>");
+                }
+            }
         }
+        
 
         // Mostrar grafo
-        
-       out.println("<b><div style='white-space: pre; font-size: 1.7em; font-family: monospace;'>"
-        + "Número de Vértices: " + grafo.cantidadDeVertices() + "</div></b>");
+       
+       out.println("<b><i><div style='white-space: pre; font-size: 1.7em; font-family: monospace;'>"
+        + "Número de Vértices: " + grafo.cantidadDeVertices() + "</i></div></b>");
 
         
-        out.println("<h2>      Grafo De Costos:</h2>");
-        out.println("<div style='white-space: pre; font-size: 1.1em; font-family: monospace;line-height: 2.0em;'>" + grafo + "</div>");
-        out.println("<h2>    Grafo De Distancias</h2>");
-        out.println("<div style='white-space: pre; font-size: 1.1em; font-family: monospace;line-height: 2.0em;'>" + grafoDistancia + "</div>");
-        out.println("<h2>    Grafo De Expansión De Costos Mínima</h2>");
-        out.println("<div style='white-space: pre; font-size: 1.1em; font-family: monospace;line-height: 2.0em;'>" + grafo.expansionDeCostoMinimo() + "</div>");
+        out.println("<div style='white-space: pre; font-size: 2.7em; font-family: monospace;margin-left: 20px;line-height: 2.0em;'>"+ "Grafo de Costos" + "</div>");
+        out.println("<div style='white-space: pre; font-size: 1.3em; font-family: monospace;margin-left: 20px;line-height: 2.0em;'>" + grafo + "</div>");
+        out.println("<div style='white-space: pre; font-size: 2.7em; font-family: monospace;margin-left: 20px;line-height: 2.0em;'>"+ "Grafo de Distancias" + "</div>");
+        out.println("<div style='white-space: pre; font-size: 1.3em; font-family: monospace;margin-left: 20px;line-height: 2.0em;'>"+ grafoDistancia + "</div>");
+        out.println("<div style='white-space: pre; font-size: 2.7em; font-family: monospace;margin-left: 20px;line-height: 2.0em;'>"+ "Grafo de Expansión de Costos Mínimos" + "</div>");
+        out.println("<div style='white-space: pre; font-size: 1.3em; font-family: monospace;margin-left: 20px;line-height: 2.0em;'>" + grafo.expansionDeCostoMinimo() + "</div>");
+        out.println("<div style='white-space: pre; font-size: 2.7em; font-family: monospace;margin-left: 20px;line-height: 2.0em;'>"+ "Grafo de Expansión de Distancias Mínimas" + "</div>");
+        out.println("<div style='white-space: pre; font-size: 1.3em; font-family: monospace;margin-left: 20px;line-height: 2.0em;'>" + grafoDistancia.expansionDeCostoMinimo() + "</div>");
     %>
 
 </body>

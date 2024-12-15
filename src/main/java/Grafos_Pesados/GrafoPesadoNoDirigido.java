@@ -193,9 +193,17 @@ public class GrafoPesadoNoDirigido<G extends Comparable<G>> {
             int nroVerticeOrigen = nroVertice(verticeOrigen);
             int nroVerticeDestino = nroVertice(verticeDestino);
             List<AdyacenteConPeso> adyacencia = listaDeAdyacencias.get(nroVerticeOrigen);
-            int nroAdyacencia = adyacencia.indexOf(nroVerticeDestino);
-            AdyacenteConPeso adyConPeso = new AdyacenteConPeso(nroVerticeDestino, peso);
-            adyacencia.set(nroAdyacencia, adyConPeso);
+            AdyacenteConPeso adySinPeso = new AdyacenteConPeso(nroVerticeDestino);
+            int nroAdyacencia = adyacencia.indexOf(adySinPeso);
+            adySinPeso.setPeso(peso);
+            adyacencia.set(nroAdyacencia, adySinPeso);
+            if(nroVerticeOrigen!=nroVerticeDestino){
+              adyacencia = listaDeAdyacencias.get(nroVerticeDestino);
+              adySinPeso = new AdyacenteConPeso(nroVerticeOrigen);
+              nroAdyacencia = adyacencia.indexOf(adySinPeso);
+              adySinPeso.setPeso(peso);
+              adyacencia.set(nroAdyacencia, adySinPeso);
+            }
         }
     }
 
