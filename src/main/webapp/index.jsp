@@ -54,7 +54,7 @@
         }
     #form-no-border {
         form{
-            border:2 px solid #87CEEB;
+           
             border-radius: 0px;
             margin-left: 5px; /* Espacio entre los formularios */
             padding: 0px;
