@@ -244,7 +244,7 @@ grafoDistancia = new GrafoPesadoNoDirigido<>();
     
     <form method="post">
 
-        <h2> Eliminar Vertice </h2>
+        <h2> Eliminar Arista </h2>
         <p>
             <label>Vértice Origen:</label>
             <input type="text" name="verticeOrigen">
@@ -354,8 +354,8 @@ grafoDistancia = new GrafoPesadoNoDirigido<>();
             String verticeOrigen = request.getParameter("verticeOrigen");
             String verticeDestino = request.getParameter("verticeDestino");
 
-            out.println("<h3>Camino de menor costo: " + grafo.caminoCostoMinimo(verticeOrigen, verticeDestino) + "</h3>");
-            out.println("<h3>Costo total del viaje: " + grafo.costoMinimo(verticeOrigen, verticeDestino) + "$</h3>");
+            out.println("<h3>Camino de menor costo: " + grafo.caminoCostoMinimoDijkstra(verticeOrigen, verticeDestino) + "</h3>");
+            out.println("<h3>Costo total del viaje: " + grafo.costoMinimoDijkstra(verticeOrigen, verticeDestino) + "$</h3>");
         } catch (IllegalArgumentException e) {
             out.println("<p>No se puede ir de " + request.getParameter("verticeOrigen") + " a " + request.getParameter("verticeDestino") + "</p>");
         }
@@ -373,8 +373,8 @@ grafoDistancia = new GrafoPesadoNoDirigido<>();
             String verticeOrigen = request.getParameter("verticeOrigen");
             String verticeDestino = request.getParameter("verticeDestino");
 
-            out.println("<h3>Camino de menor distancia " + grafoDistancia.caminoCostoMinimo(verticeOrigen, verticeDestino) + "</h3>");
-            out.println("<h3>distancia total del viaje: " + grafoDistancia.costoMinimo(verticeOrigen, verticeDestino) + "Km</h3>");
+            out.println("<h3>Camino de menor distancia " + grafoDistancia.caminoCostoMinimoDijkstra(verticeOrigen, verticeDestino) + "</h3>");
+            out.println("<h3>distancia total del viaje: " + grafoDistancia.costoMinimoDijkstra(verticeOrigen, verticeDestino) + "Km</h3>");
         } catch (IllegalArgumentException e) {
             out.println("<p>No se puede ir de " + request.getParameter("verticeOrigen") + " a " + request.getParameter("verticeDestino") + "</p>");
         }
@@ -471,9 +471,9 @@ grafoDistancia = new GrafoPesadoNoDirigido<>();
     out.println("<div style='white-space: pre; font-size: 2.7em; font-family: monospace;margin-left: 20px;line-height: 2.0em;'>" + "Grafo de Distancias" + "</div>");
     out.println("<div style='white-space: pre; font-size: 1.3em; font-family: monospace;margin-left: 20px;line-height: 2.0em;'>" + grafoDistancia + "</div>");
     out.println("<div style='white-space: pre; font-size: 2.7em; font-family: monospace;margin-left: 20px;line-height: 2.0em;'>" + "Grafo de Expansión de Costos Mínimos" + "</div>");
-    out.println("<div style='white-space: pre; font-size: 1.3em; font-family: monospace;margin-left: 20px;line-height: 2.0em;'>" + grafo.expansionDeCostoMinimo() + "</div>");
+    out.println("<div style='white-space: pre; font-size: 1.3em; font-family: monospace;margin-left: 20px;line-height: 2.0em;'>" + grafo.expansionDeCostoMinimoKruskal() + "</div>");
     out.println("<div style='white-space: pre; font-size: 2.7em; font-family: monospace;margin-left: 20px;line-height: 2.0em;'>" + "Grafo de Expansión de Distancias Mínimas" + "</div>");
-    out.println("<div style='white-space: pre; font-size: 1.3em; font-family: monospace;margin-left: 20px;line-height: 2.0em;'>" + grafoDistancia.expansionDeCostoMinimo() + "</div>");
+    out.println("<div style='white-space: pre; font-size: 1.3em; font-family: monospace;margin-left: 20px;line-height: 2.0em;'>" + grafoDistancia.expansionDeCostoMinimoKruskal() + "</div>");
 %>
 
 </body>

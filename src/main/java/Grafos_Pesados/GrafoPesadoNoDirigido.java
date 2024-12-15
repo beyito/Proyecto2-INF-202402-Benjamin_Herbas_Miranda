@@ -244,7 +244,7 @@ public class GrafoPesadoNoDirigido<G extends Comparable<G>> {
         return kruskal.getGrafo();
     }
 
-    public GrafoPesadoNoDirigido<G> expansionDeCostoMinimo() {
+    public GrafoPesadoNoDirigido<G> expansionDeCostoMinimoKruskal() {
         if(!esGrafoVacio()){
         Kruskal<G> kruskal = new Kruskal(this);
         return kruskal.getGrafo();
@@ -258,14 +258,14 @@ public class GrafoPesadoNoDirigido<G extends Comparable<G>> {
         return prim.getGrafo();
     }
 
-    public List<G> caminoCostoMinimo(G verticeOrigen, G verticeDestino) {
+    public List<G> caminoCostoMinimoDijkstra(G verticeOrigen, G verticeDestino) {
         validarVertice(verticeOrigen);
         validarVertice(verticeDestino);
         DijkstraNoDirigido<G> caminoCosto = new DijkstraNoDirigido<>(this, verticeOrigen, verticeDestino);
         return caminoCosto.caminoCostoMinimo();
     }
 
-    public double costoMinimo(G verticeOrigen, G verticeDestino) {
+    public double costoMinimoDijkstra(G verticeOrigen, G verticeDestino) {
         validarVertice(verticeOrigen);
         validarVertice(verticeDestino);
         DijkstraNoDirigido<G> caminoCosto = new DijkstraNoDirigido<>(this, verticeOrigen, verticeDestino);
