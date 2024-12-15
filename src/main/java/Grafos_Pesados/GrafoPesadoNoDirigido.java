@@ -44,22 +44,22 @@ public class GrafoPesadoNoDirigido<G extends Comparable<G>> {
     }
 
     public void insertarVertice(G vertice) {
-        // Verificar si el vértice ya existe
+        
         if (nroVertice(vertice) != NRO_DE_VERTICE_INVALIDO) {
             throw new IllegalArgumentException("El vértice: " + vertice + " ya se encuentra en el grafo");
         }
 
-        // Agregar el vértice y ordenar la lista de vértices
+     
         listaDeVertices.add(vertice);
         Collections.sort(listaDeVertices);
 
-        // Insertar una nueva lista de adyacencias para el nuevo vértice
+      
         listaDeAdyacencias.add(new ArrayList<>());
 
-        // Obtener el índice del nuevo vértice después de ordenar
+        
         int nroNuevoVertice = nroVertice(vertice);
 
-        // Si hay más de un vértice, reorganizar las listas de adyacencias
+       
         if (cantidadDeVertices() > 1) {
             for (int i = 0; i < cantidadDeVertices(); i++) {
                 for (AdyacenteConPeso adyConPeso : listaDeAdyacencias.get(i)) {
@@ -100,13 +100,13 @@ public class GrafoPesadoNoDirigido<G extends Comparable<G>> {
         }
     }
 
-    public void insertarArista(G verticeOrigen, G verticeDestino, double peso) {// Grafo no pesado no lleva peso
+    public void insertarArista(G verticeOrigen, G verticeDestino, double peso) {
         if (existeAdyacencia(verticeOrigen, verticeDestino)) {
             throw new IllegalArgumentException("Ya existe esa arista");
         }
         int nroDelVerticeOrigen = nroVertice(verticeOrigen);
         int nroDelVerticeDestino = nroVertice(verticeDestino);
-        //List<Integer> para GRAFO NO PESADO
+     
 
         List<AdyacenteConPeso> adyacentesDelOrigen = listaDeAdyacencias.get(nroDelVerticeOrigen);
         AdyacenteConPeso adyDelOrigen = new AdyacenteConPeso(nroDelVerticeDestino, peso);
