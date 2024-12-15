@@ -164,6 +164,10 @@
             grafoDistancia.insertarArista("Corea del Sur", "Egipto", 11500);
 
         }
+public void vaciarGrafo(){
+grafo = new GrafoPesadoNoDirigido<>();
+grafoDistancia = new GrafoPesadoNoDirigido<>();
+}
 
     %>
     <h1>CONSIGUE EL MEJOR VUELO!</h1>
@@ -173,6 +177,11 @@
 <div class="form-container" id ="form-no-border" >
     <form method="post"  >
         <button type="submit" name="accion" value="cargar"><h3> Cargar Grafo Predefinido </h3></button>
+    </form>
+</div>
+<div class="form-container" id ="form-no-border" >
+    <form method="post"  >
+        <button type="submit" name="accion" value="vaciar"><h3> Vaciar Grafo</h3></button>
     </form>
 </div>
 
@@ -304,7 +313,10 @@
     if ("cargar".equals(accion)) {
         cargarGrafoPredefinido();
         out.println("<p>Grafo cargado exitosamente.</p>");
-    } else if ("agregarVertice".equals(accion)) {
+    } else if ("vaciar".equals(accion)){
+       vaciarGrafo();
+       out.println("<p>Grafo vaciado exitosamente.</p>");
+    }else if ("agregarVertice".equals(accion)) {
         String vertice = request.getParameter("vertice");
         if (vertice != null && !vertice.isEmpty()) {
             try {

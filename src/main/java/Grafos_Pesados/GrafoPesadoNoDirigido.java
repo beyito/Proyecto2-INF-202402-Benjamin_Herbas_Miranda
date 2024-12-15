@@ -34,8 +34,7 @@ public class GrafoPesadoNoDirigido<G extends Comparable<G>> {
     public boolean esGrafoVacio() {
         return listaDeVertices.isEmpty();
     }
-
-    public int cantidadDeVertices() {
+  public int cantidadDeVertices() {
         return listaDeVertices.size();
     }
 
