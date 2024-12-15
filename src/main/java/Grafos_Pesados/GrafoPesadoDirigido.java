@@ -39,11 +39,9 @@ public class GrafoPesadoDirigido<G extends Comparable<G>> extends GrafoPesadoNoD
         }
 
     }
-public double flujoMaximo(){
-    FordFulkerson<G> fordFulkerson = new FordFulkerson<>(this);
-    return fordFulkerson.getFlujoMaximo();
-}
 
+
+    @Override
     public List<G> caminoCostoMinimo(G verticeOrigen, G verticeDestino) {
         DijkstraDirigido<G> caminoCosto = new DijkstraDirigido<>(this, verticeOrigen, verticeDestino);
         return caminoCosto.caminoCostoMinimo();
@@ -81,16 +79,4 @@ public double flujoMaximo(){
 }
 
 
-/*Algoritmo FordFulkersen
 
-setpesoArista
-Collectionsort( , comparadorAdyacentePorPeso;
-
-mostrar grafo
-
-G =>[[B | 40.0]->[A | 20.0]->[C | 0.0]]
-A =>[[A | 20.0]->[G | 0.0]]
-
-
-CREAR UN PRIVATE FINAL Comparate 
- */
